@@ -1,13 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.views import View
 
-def index(request):
-    return render(request, 'index.html')
-
-def signup(request):
-    return render(request, 'signup.html')
-
-def login(request):
-    return render(request, 'login.html')
+class Index(View):
+    def get(self, request):
+        return render(request, 'index.html')
 
 def movieDetail(request):
     return render(request, 'movieDetail.html')
