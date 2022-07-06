@@ -5,9 +5,9 @@ app_name = 'app'
 
 urlpatterns = [
     path('', views.Index.as_view(), name='index'),
-    path('profilecreate/', views.profileCreate, name='profileCreate'),
-    path('profilelist/', views.profileList, name='profileList'),
-    path('moviedetail/', views.movieDetail, name='movieDetail'),
-    path('movielist/', views.movieList, name='movieList'),
-    path('show/', views.show, name='show'),
+    path('profiles/', views.ProfileList.as_view(), name='profiles-list'),
+    path('profile-create/', views.ProfileCreate.as_view(), name='profile-create'),
+    path('movie/<str:profile_id>/', views.MovieList.as_view(), name='movie-list'),
+    path('movie/detail/<str:movie_id>/', views.MovieDetail.as_view(), name='movie-detail'),
+    path('movie/play/<str:movie_id>/', views.PlayMovie.as_view(), name='play-movie'),
 ]

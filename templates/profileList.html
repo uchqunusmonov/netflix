@@ -14,6 +14,17 @@
         <div class="w-6/12">
             <img src="{% static 'assets/netflix.png' %}" alt="logo" class="w-5/12 md:w-2/12">
         </div>
+        <div>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'account_logout' %}" class='bg-primary_red py-1 px-3 text-white md:text-lg rounded-md'>
+                    Logout
+                </a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class='bg-primary_red py-1 px-3 text-white md:text-lg rounded-md'>
+                    Sign In 
+                </a>
+            {% endif %}
+        </div>
 
         
     </nav>
@@ -23,32 +34,19 @@
         </h2>
 
         <div class="flex flex-wrap justify-center items-center w-10/12  md:w-6/12">
-            <div class="w-32 h-32 m-4  bg-blue-500 rounded-md cursor-pointer">
-
-            </div>
-
-            <div class="w-32 h-32 m-4  bg-blue-500 rounded-md cursor-pointer">
-
-            </div>
-
-            <div class="w-32 h-32 m-4  bg-blue-500 rounded-md cursor-pointer">
-
-            </div>
-
-            <div class="w-32 h-32 m-4  bg-blue-500 rounded-md cursor-pointer">
-
-            </div>
-            <div class="w-32 h-32 m-4  bg-blue-500 rounded-md cursor-pointer">
-
-            </div>
-            <div class="w-32 h-32 m-4  bg-blue-500 rounded-md cursor-pointer">
-
-            </div>
+            {% for profile in profiles %}
+                <a href="{% url 'app:movie-list' profile_id=profile.uuid %}">
+                    <div class="w-32 h-32 m-4  bg-blue-500 rounded-md cursor-pointer">
+                        <p class="text-6x1" style="font-weight:900; ">{{ profile.name | slice:':1' }}</p>
+                        <p>{{ profile.name }}</p>
+                    </div>
+                </a>
+            {% endfor %}
         </div>
         <div class="flex justify-center items-center">
-            <button class="px-4 py-2 rounded-md outline-none bg-gray-400 text-gray-100">
+            <a href="{% url 'app:profile-create' %}" class="px-4 py-2 rounded-md outline-none bg-gray-400 text-gray-100">
                 Add A New Profile
-            </button>
+            </a>
         </div>
     </section>
 </body>

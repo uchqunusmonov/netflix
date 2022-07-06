@@ -19,19 +19,29 @@
         <div class="w-6/12">
             <img src="{% static 'assets/netflix.png' %}" alt="logo" class="w-5/12 md:w-2/12">
         </div>
-        
-
         <div>
-            <button class='bg-primary_red py-1 px-3 text-white md:text-lg rounded-md'>
-                Log out
-            </button>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'account_logout' %}" class='bg-primary_red py-1 px-3 text-white md:text-lg rounded-md'>
+                    Logout
+                </a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class='bg-primary_red py-1 px-3 text-white md:text-lg rounded-md'>
+                    Sign In 
+                </a>
+            {% endif %}
         </div>
-        
     </nav>
     <main class='bg-primary_black h-full w-full '>
-        
+        {{movie|json_script:"movie_data"}}
         <video src="{% static 'assets/test.mp4' %}" controls class="w-full h-screen player"></video>
         
     </main>
+    <script>
+        const videoEL = document.querySelector('video');
+        const movie_data = JSON.parse(document.getElementById('movie_data').textContent);
+        const url = new URL(location.href);
+        const video_param = parseInt(url.searchParams.get('epi'))?parseInt(url.searchParams.get('epi')):0;
+        videoEL.setAttribute('src', `http://localhost:8000/media/${movie_data[video_param].file}`)
+    </script>
 </body>
 </html>
